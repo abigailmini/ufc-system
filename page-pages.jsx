@@ -516,13 +516,12 @@ function Events(){
       </div>
 
       {/* Events list */}
-      <Card padding={false}>
-        <div>
-          {filtered.map((e, i) => (
-            <div key={e.id} className="event-list-row" style={{
+      <div className="events-grid" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:16}}>
+        {filtered.map((e) => (
+          <Card key={e.id} padding={false} style={{overflow:'hidden'}}>
+            <div className="event-list-row" style={{
               display:'grid', gridTemplateColumns:'90px 1fr auto auto', gap:20, alignItems:'center',
               padding:'16px 20px',
-              borderBottom: i < filtered.length-1 ? '1px dashed rgba(255,255,255,0.05)' : 'none',
             }}>
               <div style={{textAlign:'center'}}>
                 <div style={{fontSize:10, fontWeight:700, color:'var(--t-4)', letterSpacing:'0.14em'}}>{e.dow}</div>
@@ -549,9 +548,9 @@ function Events(){
               </button>
               <button className="btn btn-primary btn-sm" onClick={()=>push('RSVP confirmed','ok')}>RSVP</button>
             </div>
-          ))}
-        </div>
-      </Card>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

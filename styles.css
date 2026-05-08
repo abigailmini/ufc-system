@@ -468,6 +468,7 @@ select{
   .progress-label-grid{gap:6px; font-size:9px !important;}
   .leaderboard-podium{grid-template-columns:1fr !important; align-items:stretch !important;}
   .event-feature-grid{padding:18px !important; gap:16px !important;}
+  .events-grid{grid-template-columns:1fr !important;}
   .event-list-row{gap:12px !important; padding:14px !important;}
   .event-list-row > :last-child,
   .event-list-row > :nth-last-child(2){width:100%;}
