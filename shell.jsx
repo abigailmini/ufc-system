@@ -272,13 +272,13 @@ function NotifPanel({ close, push }){
 
 function PageHeader({ title, sub, action, eyebrow }){
   return (
-    <div style={{display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:24, marginBottom:24}}>
-      <div>
+    <div className="page-header">
+      <div style={{minWidth:0}}>
         {eyebrow && <div className="eyebrow-lbl">{eyebrow}</div>}
         <h1 className="section-title" style={{marginTop: eyebrow?6:0}}>{title}</h1>
         {sub && <p className="section-sub">{sub}</p>}
       </div>
-      {action}
+      {action && <div className="page-header-action">{action}</div>}
     </div>
   );
 }

@@ -32,7 +32,7 @@ function GeneticReport({ setRoute }){
 
       {/* Hero strip */}
       <Card padding={false}>
-        <div style={{
+        <div className="genetic-hero-grid" style={{
           padding:'24px 28px',
           background:`linear-gradient(120deg, ${arch.color}1a, transparent 60%)`,
           borderRadius:16,
