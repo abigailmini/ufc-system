@@ -96,6 +96,7 @@ body{
   background:var(--bg-0);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x:hidden;
 }
 
 button{font-family:inherit;color:inherit;cursor:pointer;background:transparent;border:0}
@@ -370,99 +371,92 @@ textarea.input{height:auto;padding:10px 12px;line-height:1.5}
 .fw-6{font-weight:600}.fw-7{font-weight:700}
 .muted{color:var(--t-3)}
 
-/* ─── Mobile responsive (≤760px) ─── */
-@media (max-width: 760px){
-  /* Main wrapper padding */
-  main > div[style*="max-width: 1480"]{
-    padding: 0 14px 24px !important;
-  }
-  /* Topbar utility row */
-  header > div:first-child{
-    padding: 0 14px !important;
-    height: 56px !important;
-    gap: 8px !important;
-  }
-  /* Hide secondary utility buttons on mobile */
-  header > div:first-child .btn-ghost.btn-sm{ display: none !important; }
-  header > div:first-child .btn-ghost.btn-sm:first-of-type{ display: flex !important; } /* keep notif */
-  header > div:first-child > div[style*="width: 1px"]{ display: none !important; }
-  /* Avatar pill — tighten */
-  header > div:first-child > button[style*="border-radius: 99px"]{
-    padding: 4px !important; gap: 0 !important;
-  }
-  header > div:first-child > button[style*="border-radius: 99px"] > span{ display: none !important; }
+/* ─── Responsive layout helpers ─── */
+.app-shell,
+.card,
+.modal,
+.tbl,
+.tabbar-rail,
+.mobile-menu-panel,
+.mobile-nav-grid,
+.topbar-row,
+main,
+header,
+section,
+div,
+button,
+input,
+textarea,
+select{
+  max-width:100%;
+}
 
-  /* Tabs row — tighter padding, smaller chips */
-  .tabbar-rail{
-    padding: 8px 14px 0 !important;
-    margin: 0 !important; max-width: none !important;
-  }
-  .tabbar-rail .tab-chip{
-    min-width: 0 !important;
-    padding: 0 14px !important;
-    height: 38px !important;
-    font-size: 12px !important;
-  }
-  .tabbar-rail .tab-chip.tab-chip--active{
-    height: 44px !important;
-  }
+.tbl-wrap{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
 
-  /* All inline 2/3/4/5/6-col grids → single column */
+@media (max-width: 1024px){
+  .app-shell{padding:0 20px 24px !important;}
+  .section-title{font-size:22px !important;}
+
   div[style*="grid-template-columns: 1fr 320px"],
-  div[style*="grid-template-columns: 1fr 1fr"],
-  div[style*="grid-template-columns: repeat(2"],
-  div[style*="grid-template-columns: repeat(3"],
-  div[style*="grid-template-columns: repeat(4"],
-  div[style*="grid-template-columns: repeat(5"],
+  div[style*="grid-template-columns: 1.4fr 1fr"],
+  div[style*="grid-template-columns: 1.3fr 1fr"],
+  div[style*="grid-template-columns: 1fr 1.2fr 1fr"],
   div[style*="grid-template-columns: 170px 1fr auto"],
-  div[style*="grid-template-columns: 90px 1fr auto auto"]{
-    grid-template-columns: 1fr !important;
-  }
-  /* Achievements — 3 cols on mobile */
-  div[style*="grid-template-columns: repeat(6"]{
-    grid-template-columns: repeat(3, 1fr) !important;
+  div[style*="grid-template-columns: 90px 1fr auto auto"],
+  div[style*="grid-template-columns: auto 1fr auto"]{
+    grid-template-columns:1fr !important;
   }
 
-  /* Card padding */
-  .card{ padding: 16px !important; }
-
-  /* Hero genetic card — full width */
-  .genetic-card-frame{ max-width: 100% !important; }
-
-  /* Section titles smaller */
-  .section-title{ font-size: 20px !important; }
-
-  /* Tables → horizontal scroll wrapper */
-  .tbl{ font-size: 12px !important; }
-  .tbl th, .tbl td{ padding: 8px !important; white-space: nowrap; }
-
-  /* Modal — full-width */
-  .modal{ max-width: 94vw !important; margin: 0 8px; }
-
-  /* Tweaks panel — bottom sheet */
-  [data-tweaks-panel]{
-    left: 8px !important; right: 8px !important; bottom: 8px !important;
-    width: auto !important; max-width: none !important;
-  }
-
-  /* Withdrawal progress ranks row — keep horizontal but tinier */
-  .rank-bar-labels{ font-size: 9px !important; }
-
-  /* Generic flex rows that should stack */
-  div[style*="display: flex"][style*="justify-content: space-between"][style*="gap: 24"]{
-    flex-direction: column !important; align-items: flex-start !important; gap: 12px !important;
+  div[style*="grid-template-columns: repeat(4, 1fr)"],
+  div[style*="grid-template-columns: repeat(5, 1fr)"]{
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
   }
 }
 
-/* Tablet (761–1024px) — soften grids */
-@media (min-width: 761px) and (max-width: 1024px){
-  div[style*="grid-template-columns: 1fr 320px"]{
-    grid-template-columns: 1fr !important;
+/* ─── Mobile responsive (≤760px) ─── */
+@media (max-width: 760px){
+  .app-shell{padding:0 14px 22px !important;}
+  .topbar-row{padding:10px 14px !important;}
+  .mobile-nav-grid{grid-template-columns:1fr !important;}
+  .section-title{font-size:20px !important;}
+  .section-sub{font-size:12px !important;}
+  .toast-wrap{left:14px;right:14px;top:68px;}
+  .toast{min-width:0;width:100%;}
+  .modal-overlay{padding:14px;}
+  .modal{max-width:100% !important; margin:0;}
+
+  div[style*="grid-template-columns: 1fr 1fr"],
+  div[style*="grid-template-columns: repeat(2)"],
+  div[style*="grid-template-columns: repeat(3)"],
+  div[style*="grid-template-columns: repeat(4)"],
+  div[style*="grid-template-columns: repeat(5)"],
+  div[style*="grid-template-columns: 1.4fr 1fr 1fr 1fr"]{
+    grid-template-columns:1fr !important;
   }
-  div[style*="grid-template-columns: repeat(4"]{
-    grid-template-columns: repeat(2, 1fr) !important;
+
+  div[style*="grid-template-columns: repeat(6)"]{
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
   }
-  div[style*="grid-template-columns: repeat(6"]{
-    grid-template-columns: repeat(6, 1fr) !important;
+
+  div[style*="display:'flex'"],
+  div[style*="display: flex"]{
+    min-width:0;
+  }
+
+  button[style*="min-height:36"],
+  button[style*="height:36"]{
+    min-height:40px;
+  }
+
+  .tbl{font-size:12px !important; min-width:640px;}
+  .tbl th, .tbl td{padding:8px !important; white-space:nowrap;}
+
+  [data-tweaks-panel]{
+    left:8px !important; right:8px !important; bottom:8px !important;
+    width:auto !important; max-width:none !important;
   }
 }

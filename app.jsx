@@ -63,7 +63,7 @@ function App(){
         style={{minHeight:'100vh', display:'flex', flexDirection:'column', ...compactStyle}}>
         <main style={{minHeight:'100vh', display:'flex', flexDirection:'column'}}>
           <Topbar liveOn={t.discordLive} route={route} setRoute={setRoute}/>
-          <div style={{padding: t.density==='compact' ? '0 22px 20px' : '0 32px 28px', maxWidth: 1480, width:'100%', margin:'0 auto'}}>
+          <div className="app-shell" style={{padding: t.density==='compact' ? '0 22px 20px' : '0 32px 28px', maxWidth: 1480, width:'100%', margin:'0 auto'}}>
             {route==='dashboard' && <Dashboard setRoute={setRoute}/>}
             {route==='genetic' && <GeneticReport setRoute={setRoute}/>}
             {route==='submit' && <SubmitUID/>}

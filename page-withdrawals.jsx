@@ -55,7 +55,7 @@ function Withdrawals(){
             <button className="btn btn-primary btn-sm" onClick={()=>setSubmitOpen(true)}><Icon name="plus" size={13}/>Submit Withdrawal</button>
           </div>
         }>
-        <table className="tbl">
+        <div className="tbl-wrap"><table className="tbl">
           <thead>
             <tr>
               <th>Date</th><th>Source</th><th>UID</th><th>Memo</th>
@@ -82,7 +82,7 @@ function Withdrawals(){
               );
             })}
           </tbody>
-        </table>
+        </table></div>
       </Card>
 
       <Modal open={submitOpen} onClose={()=>setSubmitOpen(false)} title="Submit a withdrawal proof"

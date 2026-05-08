@@ -4,6 +4,19 @@
 const { useState, useEffect } = React;
 const { Icon, Logo, Avatar, useToast } = window;
 
+function useIsMobile(breakpoint = 760){
+  const getValue = () => typeof window !== 'undefined' && window.innerWidth <= breakpoint;
+  const [isMobile, setIsMobile] = useState(getValue);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(getValue());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 const NAV_ITEMS = [
   { id:'dashboard', label:'Dashboard', icon:'home' },
   { id:'elearning', label:'E-Learning', icon:'book' },
@@ -22,25 +35,16 @@ function Sidebar(){ return null; }
 
 function Topbar({ liveOn, route, setRoute }){
   const [notifOpen, setNotifOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const push = useToast();
-  return (
-    <header style={{
-      position:'sticky', top:0, zIndex:40,
-      display:'flex', flexDirection:'column',
-      background:'rgba(7,8,11,0.85)', backdropFilter:'blur(14px) saturate(160%)',
-    }}>
-    {/* Utility row */}
-    <div style={{
-      height:64, display:'flex', alignItems:'center', gap:16,
-      padding:'0 28px',
-    }}>
-      <div style={{display:'flex', alignItems:'center', gap:14}}>
-        <Logo size={42}/>
-      </div>
+  const isMobile = useIsMobile();
 
-      <div style={{flex:1}}/>
+  useEffect(() => {
+    if (!isMobile) setMobileMenuOpen(false);
+  }, [isMobile]);
 
-      {/* Discord Live button */}
+  const primaryActions = (
+    <>
       <button onClick={()=>setRoute('discord')}
         className={liveOn ? 'live-ring' : ''}
         style={{
@@ -49,6 +53,8 @@ function Topbar({ liveOn, route, setRoute }){
           background: liveOn ? 'linear-gradient(180deg, rgba(239,68,68,0.18), rgba(239,68,68,0.08))' : 'var(--surf-1)',
           color: liveOn ? '#fecaca' : 'var(--t-2)',
           fontWeight:600, fontSize:13,
+          maxWidth: isMobile ? '100%' : 'none',
+          justifyContent: isMobile ? 'center' : 'flex-start',
         }}>
         <Icon name="discord" size={16}/>
         {liveOn ? (
@@ -67,7 +73,6 @@ function Topbar({ liveOn, route, setRoute }){
         )}
       </button>
 
-      {/* Notifications */}
       <div style={{position:'relative'}}>
         <button className="btn btn-ghost btn-sm" style={{width:36, height:36, padding:0, position:'relative'}}
           onClick={()=>setNotifOpen(v=>!v)}>
@@ -77,79 +82,151 @@ function Topbar({ liveOn, route, setRoute }){
         {notifOpen && <NotifPanel close={()=>setNotifOpen(false)} push={push}/>}
       </div>
 
-      <button className="btn btn-ghost btn-sm" style={{width:36, height:36, padding:0}}
-        onClick={()=>setRoute('elearning')}><Icon name="cal" size={16}/></button>
-      <button className="btn btn-ghost btn-sm" style={{width:36, height:36, padding:0}}
-        onClick={()=>setRoute('profile')}><Icon name="gear" size={16}/></button>
-
-      <div style={{width:1, height:24, background:'var(--line-1)'}}/>
+      {!isMobile && (
+        <>
+          <button className="btn btn-ghost btn-sm" style={{width:36, height:36, padding:0}}
+            onClick={()=>setRoute('elearning')}><Icon name="cal" size={16}/></button>
+          <button className="btn btn-ghost btn-sm" style={{width:36, height:36, padding:0}}
+            onClick={()=>setRoute('profile')}><Icon name="gear" size={16}/></button>
+          <div style={{width:1, height:24, background:'var(--line-1)'}}/>
+        </>
+      )}
 
       <button onClick={()=>setRoute('profile')} style={{display:'flex', alignItems:'center', gap:10, padding:'4px 10px 4px 4px', borderRadius:99, border:'1px solid var(--line-1)'}}>
         <Avatar name={window.USER.name} size={28}/>
-        <span style={{fontSize:12, fontWeight:600}}>{window.USER.name.split(' ')[0]}</span>
+        {!isMobile && <span style={{fontSize:12, fontWeight:600}}>{window.USER.name.split(' ')[0]}</span>}
       </button>
-    </div>
+    </>
+  );
 
-    {/* Tabs row — chamfered hex-style tabs that physically connect to the page surface */}
-    <div className="tabbar-rail" style={{
-      display:'flex', alignItems:'flex-end', gap:0,
-      maxWidth:1480, width:'100%', margin:'0 auto',
-      padding:'10px 32px 0', overflowX:'auto', overflowY:'visible',
-      scrollbarWidth:'none', msOverflowStyle:'none',
-      position:'relative',
-      marginBottom:-1,
-      boxSizing:'border-box',
+  return (
+    <header style={{
+      position:'sticky', top:0, zIndex:40,
+      display:'flex', flexDirection:'column',
+      background:'rgba(7,8,11,0.85)', backdropFilter:'blur(14px) saturate(160%)',
     }}>
-      {NAV_ITEMS.map((item, i) => {
-        const active = route === item.id;
-        return (
-          <button key={item.id}
-            className={`tab-chip ${active ? 'tab-chip--active' : ''}`}
-            onClick={()=>setRoute(item.id)}
-            style={{
-              position:'relative',
-              height: active ? 50 : 42,
-              minWidth: 132,
-              padding:'0 22px',
-              marginRight: 2,
-              zIndex: active ? 5 : (NAV_ITEMS.length - i),
-              display:'flex', alignItems:'center', justifyContent:'center', gap:8,
-              color: active ? 'var(--accent)' : 'var(--t-3)',
-              fontSize: 13,
-              fontWeight: active ? 700 : 500,
-              letterSpacing:'-0.005em',
-              whiteSpace:'nowrap',
-              background: active
-                ? 'var(--surf-1)'
-                : 'linear-gradient(180deg, rgba(20,22,30,0.55) 0%, rgba(10,11,16,0.75) 100%)',
-              borderRadius: '14px 14px 0 0',
-              borderTop: active ? '1.5px solid var(--accent)' : '1px solid var(--line-1)',
-              borderLeft: '1px solid var(--line-1)',
-              borderRight: '1px solid var(--line-1)',
-              borderBottom: 'none',
-              transition:'height .16s ease, color .12s, background .14s',
-              filter: active ? 'drop-shadow(0 -2px 12px var(--accent-glow))' : 'none',
-              marginBottom: active ? -14 : 0,
-              paddingBottom: active ? 14 : 0,
-            }}
-            onMouseEnter={e => !active && (e.currentTarget.style.color='var(--t-1)')}
-            onMouseLeave={e => !active && (e.currentTarget.style.color='var(--t-3)')}
+      <div className="topbar-row" style={{
+        minHeight:isMobile ? 60 : 64, display:'flex', alignItems:'center', gap:isMobile ? 10 : 16,
+        padding:isMobile ? '10px 14px' : '0 28px',
+      }}>
+        <div style={{display:'flex', alignItems:'center', gap:14}}>
+          <Logo size={isMobile ? 36 : 42}/>
+        </div>
+
+        <div style={{flex:1}}/>
+
+        {isMobile ? (
+          <button
+            className="btn btn-ghost btn-sm"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            onClick={()=>setMobileMenuOpen(v=>!v)}
+            style={{width:40, height:40, padding:0, borderRadius:12}}
           >
-            <Icon name={item.icon} size={14} stroke={active?2:1.6}/>
-            <span>{item.label}</span>
-            {active && (
-              <span style={{
-                position:'absolute', left:'50%', top:-1, transform:'translateX(-50%)',
-                width:'58%', height:2, background:'var(--accent)', borderRadius:99,
-                boxShadow:'0 0 14px var(--accent-glow), 0 0 4px var(--accent)',
-              }}/>
-            )}
+            <Icon name={mobileMenuOpen ? 'x' : 'menu'} size={18}/>
           </button>
-        );
-      })}
-      {/* Tail filler — extends the active page surface across the rest of the rail */}
-      <div style={{flex:1, height:1, alignSelf:'flex-end', background:'var(--line-1)'}}/>
-    </div>
+        ) : primaryActions}
+      </div>
+
+      {isMobile ? (
+        <>
+          {mobileMenuOpen && (
+            <div className="mobile-menu-panel" style={{padding:'0 14px 14px'}}>
+              <div style={{
+                background:'linear-gradient(180deg, rgba(22,24,38,0.98), rgba(10,11,16,0.98))',
+                border:'1px solid var(--line-1)', borderRadius:16,
+                padding:12, display:'flex', flexDirection:'column', gap:10,
+                boxShadow:'0 18px 40px rgba(0,0,0,0.35)',
+              }}>
+                <div style={{display:'grid', gridTemplateColumns:'1fr auto auto', gap:10, alignItems:'center'}}>
+                  {primaryActions}
+                </div>
+                <div className="mobile-nav-grid" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:8}}>
+                  {NAV_ITEMS.map(item => {
+                    const active = route === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={()=>{ setRoute(item.id); setMobileMenuOpen(false); }}
+                        style={{
+                          display:'flex', alignItems:'center', gap:10,
+                          minHeight:44, padding:'0 12px', textAlign:'left',
+                          borderRadius:12,
+                          border:`1px solid ${active ? 'var(--accent)' : 'var(--line-1)'}`,
+                          background: active ? 'var(--accent-soft)' : 'var(--surf-1)',
+                          color: active ? 'var(--accent)' : 'var(--t-2)',
+                          fontWeight: active ? 700 : 600,
+                        }}
+                      >
+                        <Icon name={item.icon} size={15} stroke={active ? 2 : 1.8}/>
+                        <span style={{fontSize:13}}>{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="tabbar-rail" style={{
+          display:'flex', alignItems:'flex-end', gap:0,
+          maxWidth:1480, width:'100%', margin:'0 auto',
+          padding:'10px 32px 0', overflowX:'auto', overflowY:'visible',
+          scrollbarWidth:'none', msOverflowStyle:'none',
+          position:'relative',
+          marginBottom:-1,
+          boxSizing:'border-box',
+        }}>
+          {NAV_ITEMS.map((item, i) => {
+            const active = route === item.id;
+            return (
+              <button key={item.id}
+                className={`tab-chip ${active ? 'tab-chip--active' : ''}`}
+                onClick={()=>setRoute(item.id)}
+                style={{
+                  position:'relative',
+                  height: active ? 50 : 42,
+                  minWidth: 132,
+                  padding:'0 22px',
+                  marginRight: 2,
+                  zIndex: active ? 5 : (NAV_ITEMS.length - i),
+                  display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+                  color: active ? 'var(--accent)' : 'var(--t-3)',
+                  fontSize: 13,
+                  fontWeight: active ? 700 : 500,
+                  letterSpacing:'-0.005em',
+                  whiteSpace:'nowrap',
+                  background: active
+                    ? 'var(--surf-1)'
+                    : 'linear-gradient(180deg, rgba(20,22,30,0.55) 0%, rgba(10,11,16,0.75) 100%)',
+                  borderRadius: '14px 14px 0 0',
+                  borderTop: active ? '1.5px solid var(--accent)' : '1px solid var(--line-1)',
+                  borderLeft: '1px solid var(--line-1)',
+                  borderRight: '1px solid var(--line-1)',
+                  borderBottom: 'none',
+                  transition:'height .16s ease, color .12s, background .14s',
+                  filter: active ? 'drop-shadow(0 -2px 12px var(--accent-glow))' : 'none',
+                  marginBottom: active ? -14 : 0,
+                  paddingBottom: active ? 14 : 0,
+                }}
+                onMouseEnter={e => !active && (e.currentTarget.style.color='var(--t-1)')}
+                onMouseLeave={e => !active && (e.currentTarget.style.color='var(--t-3)')}
+              >
+                <Icon name={item.icon} size={14} stroke={active?2:1.6}/>
+                <span>{item.label}</span>
+                {active && (
+                  <span style={{
+                    position:'absolute', left:'50%', top:-1, transform:'translateX(-50%)',
+                    width:'58%', height:2, background:'var(--accent)', borderRadius:99,
+                    boxShadow:'0 0 14px var(--accent-glow), 0 0 4px var(--accent)',
+                  }}/>
+                )}
+              </button>
+            );
+          })}
+          <div style={{flex:1, height:1, alignSelf:'flex-end', background:'var(--line-1)'}}/>
+        </div>
+      )}
     </header>
   );
 }

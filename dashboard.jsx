@@ -216,13 +216,13 @@ function Dashboard({ setRoute }){
       <Card eyebrow="WITHDRAWAL HISTORY"
         title={<span style={{fontFamily:'var(--font-display)', fontSize:24, fontWeight:600}}>${(window.WITHDRAWALS.filter(w=>w.status==='paid').reduce((a,w)=>a+w.amount,0)).toLocaleString()} <span style={{color:'var(--t-3)', fontSize:13, fontWeight:500}}>paid · ${window.WITHDRAWALS.filter(w=>w.status==='pending').reduce((a,w)=>a+w.amount,0).toLocaleString()} pending</span></span>}
         action={
-          <div style={{display:'flex', gap:8}}>
+          <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
             <button className="btn btn-primary btn-sm"><Icon name="plus" size={14}/>Submit Withdrawal</button>
             <button className="btn btn-sm"><Icon name="dl" size={14}/>Export CSV</button>
             <button className="btn btn-sm"><Icon name="filter" size={14}/>Filter</button>
           </div>
         }>
-        <WithdrawalsTable rows={window.WITHDRAWALS.slice(0,6)} compact/>
+        <div className="tbl-wrap"><WithdrawalsTable rows={window.WITHDRAWALS.slice(0,6)} compact/></div>
         <div style={{textAlign:'center', marginTop:10}}>
           <button onClick={()=>setRoute('withdrawals')} style={{fontSize:12, color:'var(--accent)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:4}}>
             View full history <Icon name="arrow-right" size={12}/>

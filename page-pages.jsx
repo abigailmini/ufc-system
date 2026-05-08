@@ -372,7 +372,7 @@ function Leaderboard(){
             </div>
           </div>
         }>
-        <table className="tbl">
+        <div className="tbl-wrap"><table className="tbl">
           <thead>
             <tr>
               <th style={{width:36}}>#</th><th>Trader</th><th>Archetype</th>
@@ -411,7 +411,7 @@ function Leaderboard(){
               );
             })}
           </tbody>
-        </table>
+        </table></div>
       </Card>
     </div>
   );
