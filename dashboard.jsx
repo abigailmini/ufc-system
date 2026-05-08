@@ -19,26 +19,29 @@ function Dashboard({ setRoute }){
       <div className="dashboard-hero-grid" style={{display:'grid', gridTemplateColumns:'minmax(0, 1fr) minmax(0, 320px)', gap:16}}>
         {/* Profile card */}
         <Card padding={false}>
-          <div style={{padding:'20px 22px', display:'flex', flexDirection:'column', gap:18, minWidth:0, maxWidth:'100%', overflow:'hidden'}}>
+          <div className="dashboard-profile-card" style={{padding:'18px 20px', display:'flex', flexDirection:'column', gap:14, minWidth:0, maxWidth:'100%', overflow:'hidden'}}>
             {/* Identity row */}
-            <div className="dashboard-identity-row" style={{display:'flex', alignItems:'center', gap:16, flexWrap:'wrap', minWidth:0}}>
-              <div style={{position:'relative'}}>
+            <div className="dashboard-identity-row" style={{display:'grid', gridTemplateColumns:'84px minmax(0, 1fr)', alignItems:'start', gap:14, minWidth:0}}>
+              <div className="dashboard-avatar-stack" style={{position:'relative', width:84}}>
                 <div style={{
                   width:72, height:72, borderRadius:14,
                   background:`center/cover url(${arch.img})`,
                   border:`2px solid ${arch.color}`,
                   boxShadow:`0 6px 20px -6px ${arch.color}`,
                 }}/>
-                <div style={{position:'absolute', bottom:-6, right:-6, padding:'2px 6px', borderRadius:5, background:'var(--accent)', color:'#0a0a0a', fontSize:9, fontWeight:800, fontFamily:'var(--font-display)'}}>VIP {u.vip}</div>
+                <div style={{position:'absolute', top:-6, left:-4}}><RankChip code={u.rank}/></div>
+                <div style={{position:'absolute', bottom:-6, right:6, padding:'2px 6px', borderRadius:5, background:'var(--accent)', color:'#0a0a0a', fontSize:9, fontWeight:800, fontFamily:'var(--font-display)'}}>VIP {u.vip}</div>
               </div>
-              <div style={{flex:1, minWidth:0}}>
-                <div className="dashboard-identity-meta" style={{display:'flex', gap:8, alignItems:'center', marginBottom:4, flexWrap:'wrap'}}>
+              <div style={{display:'flex', flexDirection:'column', gap:8, minWidth:0}}>
+                <div className="dashboard-identity-meta" style={{display:'flex', gap:6, alignItems:'center', flexWrap:'wrap'}}>
                   <div className="eyebrow-lbl">Welcome back</div>
+                </div>
+                <div style={{fontFamily:'var(--font-display)', fontWeight:600, fontSize:22, letterSpacing:'-0.01em', lineHeight:1.05}}>{u.name}</div>
+                <div className="dashboard-inline-pills" style={{display:'flex', gap:6, flexWrap:'wrap'}}>
                   <RankChip code={u.rank}/>
                   <span className="pill pill-warn"><span className="dot" style={{background:'var(--accent)'}}/>VIP {u.vip}</span>
                 </div>
-                <div style={{fontFamily:'var(--font-display)', fontWeight:600, fontSize:24, letterSpacing:'-0.01em'}}>{u.name}</div>
-                <div className="dashboard-uid-row" style={{display:'flex', gap:8, marginTop:6, flexWrap:'wrap'}}>
+                <div className="dashboard-uid-row" style={{display:'flex', gap:6, flexWrap:'wrap'}}>
                   <span className="pill mono">UID {u.uid}</span>
                   <span className="pill mono">REF {u.ref}</span>
                 </div>
@@ -47,50 +50,48 @@ function Dashboard({ setRoute }){
 
             {/* Archetype banner */}
             <div className="dashboard-archetype-banner" style={{
-              display:'flex', alignItems:'center', justifyContent:'space-between',
-              padding:'12px 16px', borderRadius:12,
+              display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))',
+              padding:'10px 12px', borderRadius:12,
               background:`linear-gradient(90deg, ${arch.color}22, transparent)`,
               border:`1px solid ${arch.color}33`,
-              gap:12, flexWrap:'wrap', minWidth:0,
+              gap:8, minWidth:0,
             }}>
-              <div className="dashboard-archetype-meta" style={{display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', minWidth:0}}>
-                <div style={{
-                  fontFamily:'var(--font-display)', fontWeight:800, fontSize:14, letterSpacing:'0.02em',
-                  color:arch.color, padding:'3px 8px', borderRadius:6, background:`${arch.color}22`, border:`1px solid ${arch.color}55`,
-                }}>{u.archetype}-D</div>
-                <div style={{fontWeight:600}}>{u.archetype_name}</div>
-                <div className="cjk" style={{color:'var(--t-3)', fontSize:13}}>{arch.cn}</div>
-              </div>
-              <span className="pill pill-mythic">★ {u.rarity}</span>
+              <div style={{
+                fontFamily:'var(--font-display)', fontWeight:800, fontSize:13, letterSpacing:'0.02em',
+                color:arch.color, padding:'5px 8px', borderRadius:8, background:`${arch.color}22`, border:`1px solid ${arch.color}55`,
+              }}>{u.archetype}-D</div>
+              <div style={{fontWeight:600, minWidth:0}}>{u.archetype_name}</div>
+              <div className="cjk" style={{color:'var(--t-3)', fontSize:13}}>{arch.cn}</div>
+              <span className="pill pill-mythic" style={{justifySelf:'start'}}>★ {u.rarity}</span>
             </div>
 
             {/* Quick action tiles */}
             <div className="dashboard-quick-actions" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:10}}>
               <button onClick={()=>setRoute('submit')} style={{
-                display:'flex', alignItems:'center', gap:14, padding:'12px 14px', borderRadius:11,
+                display:'flex', alignItems:'center', gap:10, padding:'11px 12px', borderRadius:11,
                 background:'linear-gradient(180deg, rgba(245,197,24,0.16), rgba(245,197,24,0.04))',
-                border:'1px solid rgba(245,197,24,0.28)', textAlign:'left',
+                border:'1px solid rgba(245,197,24,0.28)', textAlign:'left', minWidth:0,
               }}>
                 <div style={{
-                  width:36, height:36, borderRadius:9, background:'rgba(245,197,24,0.22)',
-                  display:'flex', alignItems:'center', justifyContent:'center', color:'var(--accent)',
-                }}><Icon name="upload" size={18}/></div>
-                <div>
-                  <div style={{fontWeight:600, fontSize:13}}>Submit UID</div>
-                  <div style={{fontSize:11, color:'var(--t-3)'}}>Add new exchange account</div>
+                  width:34, height:34, borderRadius:9, background:'rgba(245,197,24,0.22)',
+                  display:'flex', alignItems:'center', justifyContent:'center', color:'var(--accent)', flex:'0 0 auto',
+                }}><Icon name="upload" size={17}/></div>
+                <div style={{minWidth:0}}>
+                  <div style={{fontWeight:600, fontSize:13, lineHeight:1.15}}>Submit UID</div>
+                  <div style={{fontSize:11, color:'var(--t-3)', lineHeight:1.2}}>Add account</div>
                 </div>
               </button>
               <button onClick={()=>setRoute('elearning')} style={{
-                display:'flex', alignItems:'center', gap:14, padding:'12px 14px', borderRadius:11,
-                background:'var(--surf-1)', border:'1px solid var(--line-1)', textAlign:'left',
+                display:'flex', alignItems:'center', gap:10, padding:'11px 12px', borderRadius:11,
+                background:'var(--surf-1)', border:'1px solid var(--line-1)', textAlign:'left', minWidth:0,
               }}>
                 <div style={{
-                  width:36, height:36, borderRadius:9, background:'rgba(96,165,250,0.16)',
-                  display:'flex', alignItems:'center', justifyContent:'center', color:'#60a5fa',
-                }}><Icon name="play" size={16}/></div>
-                <div>
-                  <div style={{fontWeight:600, fontSize:13}}>Watch tutorial</div>
-                  <div style={{fontSize:11, color:'var(--t-3)'}}>e-Learning library</div>
+                  width:34, height:34, borderRadius:9, background:'rgba(96,165,250,0.16)',
+                  display:'flex', alignItems:'center', justifyContent:'center', color:'#60a5fa', flex:'0 0 auto',
+                }}><Icon name="play" size={15}/></div>
+                <div style={{minWidth:0}}>
+                  <div style={{fontWeight:600, fontSize:13, lineHeight:1.15}}>Watch tutorial</div>
+                  <div style={{fontSize:11, color:'var(--t-3)', lineHeight:1.2}}>e-Learning</div>
                 </div>
               </button>
             </div>

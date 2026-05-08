@@ -447,11 +447,6 @@ select{
   .event-list-row,
   .discord-hero-grid,
   .genetic-hero-grid,
-  .dashboard-identity-row,
-  .dashboard-identity-meta,
-  .dashboard-uid-row,
-  .dashboard-archetype-banner,
-  .dashboard-archetype-meta,
   .withdrawals-kpi-hero,
   .discord-hero-actions,
   .submit-form-actions{
@@ -492,12 +487,17 @@ select{
   .account-tab-grid{
     grid-template-columns:1fr !important;
   }
+  .dashboard-profile-card{padding:16px 14px !important; gap:12px !important;}
+  .dashboard-identity-row{grid-template-columns:78px minmax(0, 1fr) !important; align-items:start !important; gap:12px !important;}
   .dashboard-identity-row > :first-child{align-self:flex-start;}
+  .dashboard-avatar-stack{width:78px !important;}
+  .dashboard-avatar-stack > div:first-child{width:68px !important; height:68px !important;}
   .dashboard-identity-meta,
   .dashboard-uid-row,
-  .dashboard-archetype-meta,
+  .dashboard-inline-pills,
   .discord-hero-actions,
-  .submit-form-actions{gap:8px !important;}
+  .submit-form-actions{gap:6px !important;}
+  .dashboard-archetype-banner{grid-template-columns:repeat(2, minmax(0, 1fr)) !important; gap:8px !important; padding:10px !important;}
   .dashboard-progress-grid{grid-template-columns:repeat(3, minmax(0, 1fr)) !important; gap:6px !important;}
   .dashboard-achievements-grid{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
   .register-strip-grid,
