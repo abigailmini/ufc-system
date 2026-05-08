@@ -36,7 +36,7 @@ function ELearning(){
               <button className="btn btn-ghost">Course outline</button>
             </div>
           </div>
-          <div style={{
+          <div className="featured-media-card" style={{
             width:200, height:240, borderRadius:14, position:'relative', overflow:'hidden',
             background:`linear-gradient(135deg, ${featured.color}55, #0a0a0a)`,
             border:`1px solid ${featured.color}55`,
@@ -174,7 +174,7 @@ function Register(){
   return (
     <div style={{display:'flex', flexDirection:'column', gap:16}}>
       <Card padding={false}>
-        <div style={{padding:'28px 32px', display:'grid', gridTemplateColumns:'1fr auto', gap:24, alignItems:'center', background:'linear-gradient(120deg, rgba(245,197,24,0.1), transparent)', borderRadius:16}}>
+        <div className="register-hero-grid" style={{padding:'28px 32px', display:'grid', gridTemplateColumns:'minmax(0, 1fr) auto', gap:24, alignItems:'center', background:'linear-gradient(120deg, rgba(245,197,24,0.1), transparent)', borderRadius:16}}>
           <div>
             <div className="eyebrow-lbl">Affiliate Hub</div>
             <h1 className="section-title" style={{marginTop:6}}>Register through UFC. Earn rebates, bonuses & a place in the leaderboard.</h1>
@@ -189,19 +189,19 @@ function Register(){
       </Card>
 
       <Card eyebrow="PROP FIRMS" title="Funded challenges & evals">
-        <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:12}}>
+        <div className="register-firm-grid" style={{display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:12}}>
           {window.PROP_FIRMS.map(f => <FirmRegisterCard key={f.id} f={f} push={push}/>)}
         </div>
       </Card>
 
       <Card eyebrow="EXCHANGES" title="Spot & futures trading">
-        <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:12}}>
+        <div className="register-firm-grid" style={{display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:12}}>
           {window.EXCHANGES.map(f => <FirmRegisterCard key={f.id} f={{...f, blurb:'Direct trading, fee rebate · UID auto-binds'}} push={push}/>)}
         </div>
       </Card>
 
       <Card eyebrow="HOW IT WORKS" title="From sign-up to first payout">
-        <div style={{display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:12}}>
+        <div className="register-steps-grid" style={{display:'grid', gridTemplateColumns:'repeat(4, minmax(0, 1fr))', gap:12}}>
           {[
             ['1','Pick a firm','Choose any partner — your UFC link is pre-bound.','rocket'],
             ['2','Register','Use the registration link to create your account.','user'],
@@ -225,9 +225,9 @@ function Register(){
 
 function FirmRegisterCard({ f, push }){
   return (
-    <div style={{
+    <div className="register-card" style={{
       padding:'18px 18px 14px', borderRadius:13, border:`1px solid var(--line-1)`,
-      background:'var(--surf-1)', position:'relative', overflow:'hidden',
+      background:'var(--surf-1)', position:'relative', overflow:'hidden', minWidth:0,
     }}>
       <div style={{position:'absolute', top:-40, right:-40, width:160, height:160, borderRadius:'50%', background:`radial-gradient(circle, ${f.accent}22, transparent 70%)`}}/>
       <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:14, position:'relative'}}>
@@ -242,7 +242,7 @@ function FirmRegisterCard({ f, push }){
         <Icon name="sparkles" size={14} style={{color:'var(--accent)'}}/>
         <div style={{fontSize:12, color:'var(--accent-2)', fontWeight:600}}>10% rebate · auto-applied</div>
       </div>
-      <div style={{display:'flex', gap:6}}>
+      <div className="register-card-actions" style={{display:'flex', gap:6, flexWrap:'wrap'}}>
         <button className="btn btn-primary btn-sm" style={{flex:1}}>
           <Icon name="ext" size={13}/>Register
         </button>
@@ -276,14 +276,14 @@ function Leaderboard(){
               <div className="eyebrow-lbl">Monthly Sprint Challenge</div>
               <h1 className="section-title" style={{marginTop:6}}>May 2026 Target: <span style={{color:'var(--accent)'}}>${(targetMonth/1_000_000).toFixed(1)}M</span></h1>
               <div className="section-sub">Combined jackpots + prop firm withdrawals · Updated daily</div>
-              <div style={{display:'flex', gap:8, marginTop:12}}>
+              <div className="leaderboard-hero-countdown" style={{display:'flex', gap:8, marginTop:12}}>
                 <span className="pill"><Icon name="trophy" size={11}/>Jackpot wins · 12</span>
                 <span className="pill"><Icon name="fire" size={11}/>New funded · 41</span>
               </div>
             </div>
             <div style={{display:'flex', gap:8}}>
               {['23','16','14'].map((v,i)=>(
-                <div key={i} style={{minWidth:50, padding:'10px 8px', borderRadius:9, background:'var(--surf-2)', border:'1px solid var(--line-1)', textAlign:'center'}}>
+                <div key={i} className="countdown-stat-card" style={{minWidth:50, padding:'10px 8px', borderRadius:9, background:'var(--surf-2)', border:'1px solid var(--line-1)', textAlign:'center'}}>
                   <div style={{fontFamily:'var(--font-display)', fontSize:22, fontWeight:700, color:'var(--accent)', lineHeight:1}}>{v}</div>
                   <div style={{fontSize:10, color:'var(--t-3)', marginTop:4}}>{['DAYS','HRS','MIN'][i]}</div>
                 </div>
@@ -301,7 +301,7 @@ function Leaderboard(){
               return <div key={v} className="bar-tick" style={{left:`${left}%`}}/>;
             })}
           </div>
-          <div style={{display:'grid', gridTemplateColumns:'repeat(5, 1fr)', marginTop:8, fontSize:10, color:'var(--t-4)', fontWeight:700, letterSpacing:'0.12em'}}>
+          <div className="progress-label-grid" style={{display:'grid', gridTemplateColumns:'repeat(5, minmax(0, 1fr))', marginTop:8, fontSize:10, color:'var(--t-4)', fontWeight:700, letterSpacing:'0.12em', gap:4}}>
             <span>$0</span><span style={{textAlign:'center'}}>$100K</span><span style={{textAlign:'center'}}>$250K</span><span style={{textAlign:'center'}}>$500K</span><span style={{textAlign:'right'}}>$2M</span>
           </div>
         </div>
@@ -309,7 +309,7 @@ function Leaderboard(){
 
       {/* Trader rank stat row */}
       <Card eyebrow="TRADER RANK SYSTEM" title="Community at a glance">
-        <div style={{display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:10}}>
+        <div className="leaderboard-tier-grid" style={{display:'grid', gridTemplateColumns:'repeat(5, minmax(0, 1fr))', gap:10}}>
           {tiers.map(r => (
             <div key={r.code} style={{padding:'16px 16px', borderRadius:11, border:'1px solid var(--line-1)', background:'var(--surf-1)', textAlign:'center', position:'relative', overflow:'hidden'}}>
               <div style={{height:3, position:'absolute', left:0, right:0, top:0, background: getRankColor(r.code)}}/>
@@ -324,7 +324,7 @@ function Leaderboard(){
 
       {/* Podium */}
       <Card eyebrow={`TOP 3 — ${view.toUpperCase()}`} title="Podium">
-        <div style={{display:'grid', gridTemplateColumns:'1fr 1.2fr 1fr', gap:12, alignItems:'flex-end'}}>
+        <div className="leaderboard-podium" style={{display:'grid', gridTemplateColumns:'1fr 1.2fr 1fr', gap:12, alignItems:'flex-end'}}>
           {[top3[1], top3[0], top3[2]].map((t,i)=>{
             if(!t) return null;
             const place = [2,1,3][i];
@@ -372,7 +372,7 @@ function Leaderboard(){
             </div>
           </div>
         }>
-        <div className="tbl-wrap"><table className="tbl">
+        <div className="tbl-wrap leaderboard-table-wrap"><table className="tbl leaderboard-table">
           <thead>
             <tr>
               <th style={{width:36}}>#</th><th>Trader</th><th>Archetype</th>
@@ -457,7 +457,7 @@ function Events(){
 
       {/* Featured next event */}
       <Card style={{marginBottom:24, padding:0, overflow:'hidden', background:'linear-gradient(135deg, rgba(245,197,24,0.08), rgba(239,68,68,0.06) 60%, var(--surf-1))'}}>
-        <div style={{display:'grid', gridTemplateColumns:'170px 1fr auto', gap:24, padding:24, alignItems:'center'}}>
+        <div className="event-feature-grid" style={{display:'grid', gridTemplateColumns:'170px 1fr auto', gap:24, padding:24, alignItems:'center'}}>
           <div style={{
             display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
             padding:'18px 14px', background:'rgba(0,0,0,0.35)',
@@ -519,7 +519,7 @@ function Events(){
       <Card padding={false}>
         <div>
           {filtered.map((e, i) => (
-            <div key={e.id} style={{
+            <div key={e.id} className="event-list-row" style={{
               display:'grid', gridTemplateColumns:'90px 1fr auto auto', gap:20, alignItems:'center',
               padding:'16px 20px',
               borderBottom: i < filtered.length-1 ? '1px dashed rgba(255,255,255,0.05)' : 'none',

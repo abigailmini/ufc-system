@@ -29,10 +29,10 @@ function SubmitUID(){
   const f = window.helpers.firmBy(firm);
 
   return (
-    <div style={{display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:16, alignItems:'flex-start'}}>
+    <div className="submit-layout-grid" style={{display:'grid', gridTemplateColumns:'minmax(0, 1.4fr) minmax(0, 1fr)', gap:16, alignItems:'flex-start'}}>
       <div style={{display:'flex', flexDirection:'column', gap:16}}>
         <Card eyebrow="STEP 1 OF 3" title="Pick the firm or exchange">
-          <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:10}}>
+          <div className="submit-firm-grid" style={{display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:10}}>
             {allFirms.map(opt => {
               const sel = firm === opt.id;
               return (
@@ -40,7 +40,7 @@ function SubmitUID(){
                   display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:11,
                   background: sel ? `linear-gradient(180deg, ${opt.accent}14, transparent)` : 'var(--surf-1)',
                   border: `1px solid ${sel ? opt.accent : 'var(--line-1)'}`,
-                  textAlign:'left',
+                  textAlign:'left', width:'100%', minWidth:0,
                 }}>
                   <FirmIcon id={opt.id}/>
                   <div style={{flex:1, minWidth:0}}>
@@ -67,7 +67,7 @@ function SubmitUID(){
 
             <div>
               <label className="eyebrow-lbl">Funded amount</label>
-              <div style={{display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:6, marginTop:6}}>
+              <div className="submit-funded-grid" style={{display:'grid', gridTemplateColumns:'repeat(5, minmax(0, 1fr))', gap:6, marginTop:6}}>
                 {['10000','25000','50000','100000','200000'].map(v=>(
                   <button type="button" key={v} onClick={()=>setFunded(v)} style={{
                     height:36, borderRadius:8, fontSize:12, fontWeight:600,
@@ -101,7 +101,7 @@ function SubmitUID(){
               <textarea className="input" rows="2" placeholder="Anything we should know?" style={{marginTop:6}}/>
             </div>
 
-            <div style={{display:'flex', justifyContent:'flex-end', gap:8, marginTop:6}}>
+            <div className="submit-form-actions" style={{display:'flex', justifyContent:'flex-end', gap:8, marginTop:6}}>
               <button type="button" className="btn btn-ghost" onClick={()=>{setUid(''); setProof(null);}}>Reset</button>
               <button type="submit" className="btn btn-primary" disabled={submitting}>
                 {submitting ? 'Submitting…' : <>Submit for review <Icon name="arrow-right" size={14}/></>}
@@ -112,7 +112,7 @@ function SubmitUID(){
       </div>
 
       {/* Sidebar — guide + recent */}
-      <div style={{display:'flex', flexDirection:'column', gap:16, position:'sticky', top:80}}>
+      <div className="submit-sidebar" style={{display:'flex', flexDirection:'column', gap:16, position:'sticky', top:80, minWidth:0}}>
         <Card eyebrow="STEP 3 OF 3" title="What happens next">
           <ol style={{listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:14}}>
             {[

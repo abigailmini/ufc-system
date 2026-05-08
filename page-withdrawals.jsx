@@ -20,9 +20,9 @@ function Withdrawals(){
   return (
     <div style={{display:'flex', flexDirection:'column', gap:16}}>
       {/* KPI strip */}
-      <div style={{display:'grid', gridTemplateColumns:'1.4fr 1fr 1fr 1fr', gap:12}}>
+      <div className="withdrawals-kpi-grid" style={{display:'grid', gridTemplateColumns:'minmax(0, 1.4fr) repeat(3, minmax(0, 1fr))', gap:12}}>
         <Card padding={false}>
-          <div style={{padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:14}}>
+          <div className="withdrawals-kpi-hero" style={{padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, flexWrap:'wrap'}}>
             <div>
               <div className="eyebrow-lbl">Total withdrawn</div>
               <div style={{fontFamily:'var(--font-display)', fontSize:36, fontWeight:700, color:'var(--accent)', marginTop:6}}>${totalPaid.toLocaleString()}</div>
@@ -55,7 +55,7 @@ function Withdrawals(){
             <button className="btn btn-primary btn-sm" onClick={()=>setSubmitOpen(true)}><Icon name="plus" size={13}/>Submit Withdrawal</button>
           </div>
         }>
-        <div className="tbl-wrap"><table className="tbl">
+        <div className="tbl-wrap withdrawals-table-wrap"><table className="tbl withdrawals-table">
           <thead>
             <tr>
               <th>Date</th><th>Source</th><th>UID</th><th>Memo</th>
@@ -97,7 +97,7 @@ function Withdrawals(){
               {[...window.PROP_FIRMS, ...window.EXCHANGES].map(f=><option key={f.id}>{f.name}</option>)}
             </select>
           </div>
-          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:10}}>
+          <div className="withdrawals-modal-grid" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:10}}>
             <div>
               <label className="eyebrow-lbl">UID</label>
               <input className="input mono" placeholder="22379" style={{marginTop:6}}/>

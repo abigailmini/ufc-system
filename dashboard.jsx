@@ -16,12 +16,12 @@ function Dashboard({ setRoute }){
     <div style={{display:'flex', flexDirection:'column', gap:16}}>
 
       {/* Hero row: profile card (left) + genetic card (right) */}
-      <div style={{display:'grid', gridTemplateColumns:'1fr 320px', gap:16}}>
+      <div className="dashboard-hero-grid" style={{display:'grid', gridTemplateColumns:'minmax(0, 1fr) minmax(0, 320px)', gap:16}}>
         {/* Profile card */}
         <Card padding={false}>
-          <div style={{padding:'20px 22px', display:'flex', flexDirection:'column', gap:18}}>
+          <div style={{padding:'20px 22px', display:'flex', flexDirection:'column', gap:18, minWidth:0, maxWidth:'100%', overflow:'hidden'}}>
             {/* Identity row */}
-            <div style={{display:'flex', alignItems:'center', gap:16}}>
+            <div className="dashboard-identity-row" style={{display:'flex', alignItems:'center', gap:16, flexWrap:'wrap', minWidth:0}}>
               <div style={{position:'relative'}}>
                 <div style={{
                   width:72, height:72, borderRadius:14,
@@ -32,13 +32,13 @@ function Dashboard({ setRoute }){
                 <div style={{position:'absolute', bottom:-6, right:-6, padding:'2px 6px', borderRadius:5, background:'var(--accent)', color:'#0a0a0a', fontSize:9, fontWeight:800, fontFamily:'var(--font-display)'}}>VIP {u.vip}</div>
               </div>
               <div style={{flex:1, minWidth:0}}>
-                <div style={{display:'flex', gap:8, alignItems:'center', marginBottom:4}}>
+                <div className="dashboard-identity-meta" style={{display:'flex', gap:8, alignItems:'center', marginBottom:4, flexWrap:'wrap'}}>
                   <div className="eyebrow-lbl">Welcome back</div>
                   <RankChip code={u.rank}/>
                   <span className="pill pill-warn"><span className="dot" style={{background:'var(--accent)'}}/>VIP {u.vip}</span>
                 </div>
                 <div style={{fontFamily:'var(--font-display)', fontWeight:600, fontSize:24, letterSpacing:'-0.01em'}}>{u.name}</div>
-                <div style={{display:'flex', gap:8, marginTop:6}}>
+                <div className="dashboard-uid-row" style={{display:'flex', gap:8, marginTop:6, flexWrap:'wrap'}}>
                   <span className="pill mono">UID {u.uid}</span>
                   <span className="pill mono">REF {u.ref}</span>
                 </div>
@@ -46,13 +46,14 @@ function Dashboard({ setRoute }){
             </div>
 
             {/* Archetype banner */}
-            <div style={{
+            <div className="dashboard-archetype-banner" style={{
               display:'flex', alignItems:'center', justifyContent:'space-between',
               padding:'12px 16px', borderRadius:12,
               background:`linear-gradient(90deg, ${arch.color}22, transparent)`,
               border:`1px solid ${arch.color}33`,
+              gap:12, flexWrap:'wrap', minWidth:0,
             }}>
-              <div style={{display:'flex', alignItems:'center', gap:12}}>
+              <div className="dashboard-archetype-meta" style={{display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', minWidth:0}}>
                 <div style={{
                   fontFamily:'var(--font-display)', fontWeight:800, fontSize:14, letterSpacing:'0.02em',
                   color:arch.color, padding:'3px 8px', borderRadius:6, background:`${arch.color}22`, border:`1px solid ${arch.color}55`,
@@ -64,7 +65,7 @@ function Dashboard({ setRoute }){
             </div>
 
             {/* Quick action tiles */}
-            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:10}}>
+            <div className="dashboard-quick-actions" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:10}}>
               <button onClick={()=>setRoute('submit')} style={{
                 display:'flex', alignItems:'center', gap:14, padding:'12px 14px', borderRadius:11,
                 background:'linear-gradient(180deg, rgba(245,197,24,0.16), rgba(245,197,24,0.04))',
@@ -96,8 +97,8 @@ function Dashboard({ setRoute }){
 
             {/* Withdrawal progress */}
             <div>
-              <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8}}>
-                <div style={{display:'flex', alignItems:'baseline', gap:8}}>
+              <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, gap:8, flexWrap:'wrap'}}>
+                <div style={{display:'flex', alignItems:'baseline', gap:8, flexWrap:'wrap'}}>
                   <div className="eyebrow-lbl">Withdrawal progress</div>
                   <span style={{fontFamily:'var(--font-display)', fontSize:18, fontWeight:600, color:'var(--accent)'}}>${(u.withdrawn/1000).toFixed(1)}K</span>
                   <span style={{fontSize:12, color:'var(--t-3)'}}>/ ${(u.withdrawal_goal/1000).toFixed(0)}K</span>
@@ -113,7 +114,7 @@ function Dashboard({ setRoute }){
                   return <div key={r.code} className="bar-tick" style={{left:`${left}%`}}/>;
                 })}
               </div>
-              <div style={{display:'grid', gridTemplateColumns:'repeat(5, 1fr)', marginTop:10, fontSize:10, fontWeight:700, letterSpacing:'0.12em'}}>
+              <div className="dashboard-progress-grid progress-label-grid" style={{display:'grid', gridTemplateColumns:'repeat(5, minmax(0, 1fr))', marginTop:10, fontSize:10, fontWeight:700, letterSpacing:'0.12em', gap:4}}>
                 {ranks.map((r,i)=>(
                   <div key={r.code} style={{
                     textAlign: i===0?'left':i===ranks.length-1?'right':'center',
@@ -129,7 +130,7 @@ function Dashboard({ setRoute }){
                 <div className="eyebrow-lbl">Achievements</div>
                 <button onClick={()=>setRoute('profile')} style={{fontSize:12, color:'var(--accent)', fontWeight:600, display:'flex', alignItems:'center', gap:4}}>View all <Icon name="arrow-right" size={12}/></button>
               </div>
-              <div style={{display:'grid', gridTemplateColumns:'repeat(6, 1fr)', gap:8}}>
+              <div className="dashboard-achievements-grid" style={{display:'grid', gridTemplateColumns:'repeat(6, minmax(0, 1fr))', gap:8}}>
                 {window.ACHIEVEMENTS.map(a=> <window.Badge key={a.id} a={a} size={96}/>)}
               </div>
             </div>
@@ -138,7 +139,7 @@ function Dashboard({ setRoute }){
 
         {/* Genetic card */}
         <Card padding={false}>
-          <div style={{padding:14, display:'flex', flexDirection:'column', gap:12, height:'100%'}}>
+          <div style={{padding:14, display:'flex', flexDirection:'column', gap:12, height:'100%', minWidth:0, maxWidth:'100%', overflow:'hidden'}}>
             <div style={{
               position:'relative', borderRadius:12, overflow:'hidden',
               background:`center/cover url(${arch.img})`,
@@ -150,7 +151,7 @@ function Dashboard({ setRoute }){
               <div style={{position:'absolute', top:10, left:14, fontFamily:'var(--font-display)', fontWeight:800, fontSize:34, color:arch.color, letterSpacing:'0.02em', mixBlendMode:'multiply'}}>{u.archetype}</div>
               <div className="cjk" style={{position:'absolute', top:48, left:14, fontWeight:700, fontSize:20, color:arch.color}}>{arch.cn}</div>
               {/* Bottom strip */}
-              <div style={{position:'absolute', left:0, right:0, bottom:0, padding:'8px 12px', background:'linear-gradient(180deg, transparent, rgba(0,0,0,0.85))', display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+              <div style={{position:'absolute', left:0, right:0, bottom:0, padding:'8px 12px', background:'linear-gradient(180deg, transparent, rgba(0,0,0,0.85))', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, flexWrap:'wrap'}}>
                 <span className="pill pill-mythic">★ {u.rarity} {u.rarity_pct}%</span>
                 <button onClick={()=>setReveal(true)} style={{fontSize:10, fontWeight:700, color:'var(--accent)', letterSpacing:'0.1em'}}>TAP TO REVEAL STATS →</button>
               </div>
@@ -171,13 +172,13 @@ function Dashboard({ setRoute }){
       {/* Player stats */}
       <Card eyebrow="ITS PLAYER STATS" title={<span>Your trading <span style={{color:'var(--accent)'}}>performance</span></span>}
         action={<span className="pill pill-ok"><span className="dot" style={{background:'var(--ok)'}}/>Active</span>}>
-        <div style={{display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:10, marginBottom:10}}>
+        <div className="dashboard-stats-grid" style={{display:'grid', gridTemplateColumns:'repeat(4, minmax(0, 1fr))', gap:10, marginBottom:10}}>
           <StatTile label="Est. pass rate" value={`${u.est_pass_rate}%`} sub={`your archetype: ${u.archetype}-D`} color="#06b6d4"/>
           <StatTile label="Actual pass rate" value={`${u.actual_pass_rate}%`} sub={`+${u.actual_pass_rate-u.est_pass_rate}% above est.`} color="#22c55e"/>
           <StatTile label="Last 7 days" value={<WLStrip data={u.last_7}/>} sub={`${u.last_7.filter(x=>x==='W').length}W / ${u.last_7.filter(x=>x==='L').length}L`}/>
           <StatTile label="Highest streak" value={<span style={{display:'flex',alignItems:'center',gap:8}}><Icon name="fire" size={22} style={{color:'#f97316'}}/>{u.highest_streak} <span style={{fontSize:12, color:'var(--t-3)'}}>wins</span></span>} sub={`${u.jackpots} jackpots · $${u.jackpot_total.toLocaleString()} total`}/>
         </div>
-        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:10}}>
+        <div className="dashboard-shortcuts-grid" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:10}}>
           <button onClick={()=>setRoute('register')} style={shortcutTileStyle}>
             <div style={{display:'flex', alignItems:'center', gap:12}}>
               <div style={{width:32, height:32, borderRadius:8, background:'rgba(124,58,237,0.18)', display:'flex', alignItems:'center', justifyContent:'center', color:'#a78bfa', fontFamily:'var(--font-display)', fontWeight:700, fontSize:11}}>XYZ</div>
@@ -222,7 +223,7 @@ function Dashboard({ setRoute }){
             <button className="btn btn-sm"><Icon name="filter" size={14}/>Filter</button>
           </div>
         }>
-        <div className="tbl-wrap"><WithdrawalsTable rows={window.WITHDRAWALS.slice(0,6)} compact/></div>
+        <div className="tbl-wrap dashboard-withdrawals-preview"><WithdrawalsTable rows={window.WITHDRAWALS.slice(0,6)} compact/></div>
         <div style={{textAlign:'center', marginTop:10}}>
           <button onClick={()=>setRoute('withdrawals')} style={{fontSize:12, color:'var(--accent)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:4}}>
             View full history <Icon name="arrow-right" size={12}/>
@@ -231,7 +232,7 @@ function Dashboard({ setRoute }){
       </Card>
 
       <Modal open={reveal} onClose={()=>setReveal(false)} title="Genetic stats" size="lg">
-        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+        <div className="dashboard-modal-grid" style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:12}}>
           {[
             ['Patience', 92, '#14b8a6'],
             ['Discipline', 88, '#22c55e'],
@@ -324,7 +325,7 @@ function RegisterStrip({ setRoute }){
         <span className="pill">PROP FIRM</span>
         <span style={{fontSize:11, color:'var(--t-3)'}}>funded challenges & evals</span>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:10}}>
+      <div className="register-strip-grid" style={{display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:10}}>
         {window.PROP_FIRMS.map(f => (
           <div key={f.id} style={{
             position:'relative', padding:'14px 14px 12px', borderRadius:12,

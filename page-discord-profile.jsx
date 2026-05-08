@@ -13,7 +13,7 @@ function Discord({ liveOn, setLiveOn }){
     <div style={{display:'flex', flexDirection:'column', gap:16}}>
       {/* Live banner */}
       <Card padding={false}>
-        <div style={{
+        <div className="discord-hero-grid" style={{
           padding:'24px 28px', display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:24, alignItems:'center',
           background: liveOn
             ? 'radial-gradient(ellipse 60% 80% at 0% 50%, rgba(239,68,68,0.18), transparent 70%), linear-gradient(180deg, var(--surf-1), var(--surf-0))'
@@ -23,7 +23,7 @@ function Discord({ liveOn, setLiveOn }){
           position:'relative', overflow:'hidden',
         }}>
           {/* Decorative background */}
-          <svg style={{position:'absolute', right:-20, top:-20, opacity:0.12, pointerEvents:'none'}} width="280" height="280" viewBox="0 0 100 100">
+          <svg className="discord-hero-art" style={{position:'absolute', right:-20, top:-20, opacity:0.12, pointerEvents:'none', width:'min(280px, 72vw)', height:'auto', maxWidth:'100%'}} width="280" height="280" viewBox="0 0 100 100">
             <path d="M30 30 h40 a8 8 0 0 1 8 8 v24 a8 8 0 0 1-8 8 h-30 l-12 8 v-8 a8 8 0 0 1-8-8 v-24 a8 8 0 0 1 8-8 z" fill="#5865f2"/>
           </svg>
 
@@ -46,7 +46,7 @@ function Discord({ liveOn, setLiveOn }){
               UFC's Discord is where coaches walk live trades, run risk drills, and answer questions in voice channels.
               Join 2,400+ traders.
             </p>
-            <div style={{display:'flex', gap:10, marginTop:18}}>
+            <div className="discord-hero-actions" style={{display:'flex', gap:10, marginTop:18}}>
               <button onClick={()=>push('Opening Discord…','info')} className="btn btn-primary btn-lg" style={{
                 background: liveOn ? 'linear-gradient(180deg, #ef4444, #c41a1a)' : undefined,
                 color: liveOn ? '#fff' : undefined,
@@ -87,7 +87,7 @@ function Discord({ liveOn, setLiveOn }){
       {/* This week */}
       <Card eyebrow="THIS WEEK'S SCHEDULE" title="Daily Live calendar"
         action={<button className="btn btn-sm" onClick={()=>push('Calendar synced','ok')}><Icon name="cal" size={13}/>Add to calendar</button>}>
-        <div style={{display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:10}}>
+        <div className="discord-schedule-grid" style={{display:'grid', gridTemplateColumns:'repeat(5, minmax(0, 1fr))', gap:10}}>
           {window.LIVE_SCHEDULE.map(s => (
             <div key={s.day} style={{
               padding:'14px 14px', borderRadius:12,
@@ -112,7 +112,7 @@ function Discord({ liveOn, setLiveOn }){
       </Card>
 
       {/* Discord channels overview */}
-      <div style={{display:'grid', gridTemplateColumns:'1.3fr 1fr', gap:16}}>
+      <div className="discord-content-grid" style={{display:'grid', gridTemplateColumns:'1.3fr 1fr', gap:16}}>
         <Card eyebrow="CHANNELS" title="Where the action is">
           <div style={{display:'flex', flexDirection:'column', gap:6}}>
             {[
@@ -187,7 +187,7 @@ function Profile(){
     <div style={{display:'flex', flexDirection:'column', gap:16}}>
       {/* Identity hero */}
       <Card padding={false}>
-        <div style={{padding:'24px 26px', display:'flex', alignItems:'center', gap:20}}>
+        <div className="profile-hero" style={{padding:'24px 26px', display:'flex', alignItems:'center', gap:20}}>
           <div style={{
             width:88, height:88, borderRadius:18, position:'relative',
             background:`center/cover url(${arch.img})`,
@@ -235,7 +235,7 @@ function Profile(){
 function AccountTab({ push }){
   const u = window.USER;
   return (
-    <div style={{display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:16, alignItems:'flex-start'}}>
+    <div className="account-tab-grid" style={{display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:16, alignItems:'flex-start'}}>
       <Card eyebrow="ACCOUNT INFO" title="Personal details">
         <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
           <Field label="Display name" value={u.name}/>

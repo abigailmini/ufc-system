@@ -1,5 +1,7 @@
 /* UFC Trader Dashboard — global styles */
 
+*, *::before, *::after{box-sizing:border-box}
+
 :root{
   /* Backgrounds */
   --bg-0: #07080b;
@@ -85,8 +87,8 @@
   --surf-2:#251622;
 }
 
-*,*::before,*::after{box-sizing:border-box}
 html,body,#root{height:100%}
+html,body{overflow-x:hidden;max-width:100vw}
 body{
   margin:0;
   font-family: var(--font-body);
@@ -102,6 +104,7 @@ body{
 button{font-family:inherit;color:inherit;cursor:pointer;background:transparent;border:0}
 input,textarea,select{font-family:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
+img,svg,video{max-width:100%;height:auto}
 .mono{font-family:var(--font-mono);font-feature-settings:"tnum" 1, "ss01" 1}
 .cjk{font-family:var(--font-cjk)}
 .display{font-family:var(--font-display);letter-spacing:-0.01em}
@@ -418,6 +421,15 @@ select{
 }
 
 /* ─── Mobile responsive (≤760px) ─── */
+.register-hero-grid,
+.register-firm-grid,
+.register-steps-grid,
+.leaderboard-tier-grid,
+.register-card,
+.register-card-actions{
+  min-width:0;
+}
+
 @media (max-width: 760px){
   .app-shell{padding:0 14px 22px !important;}
   .topbar-row{padding:10px 14px !important;}
@@ -428,7 +440,74 @@ select{
   .toast{min-width:0;width:100%;}
   .modal-overlay{padding:14px;}
   .modal{max-width:100% !important; margin:0;}
-
+  .page-header,
+  .profile-hero,
+  .leaderboard-hero-countdown,
+  .event-feature-grid,
+  .event-list-row,
+  .discord-hero-grid,
+  .genetic-hero-grid,
+  .dashboard-identity-row,
+  .dashboard-identity-meta,
+  .dashboard-uid-row,
+  .dashboard-archetype-banner,
+  .dashboard-archetype-meta,
+  .withdrawals-kpi-hero,
+  .discord-hero-actions,
+  .submit-form-actions{
+    grid-template-columns:1fr !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+  }
+  .page-header{gap:12px !important; align-items:flex-start !important; margin-bottom:18px !important;}
+  .page-header-action{width:100%;}
+  .page-header-action > *{width:100%; max-width:100%;}
+  .featured-media-card{width:100% !important; height:200px !important;}
+  .leaderboard-hero-countdown{flex-wrap:wrap;}
+  .countdown-stat-card{flex:1 1 calc(33.333% - 6px); min-width:0 !important;}
+  .progress-label-grid{gap:6px; font-size:9px !important;}
+  .leaderboard-podium{grid-template-columns:1fr !important; align-items:stretch !important;}
+  .event-feature-grid{padding:18px !important; gap:16px !important;}
+  .event-list-row{gap:12px !important; padding:14px !important;}
+  .event-list-row > :last-child,
+  .event-list-row > :nth-last-child(2){width:100%;}
+  .dashboard-hero-grid,
+  .dashboard-quick-actions,
+  .dashboard-stats-grid,
+  .dashboard-shortcuts-grid,
+  .dashboard-modal-grid,
+  .register-strip-grid,
+  .submit-layout-grid,
+  .submit-firm-grid,
+  .submit-funded-grid,
+  .withdrawals-kpi-grid,
+  .withdrawals-modal-grid,
+  .discord-schedule-grid,
+  .discord-content-grid,
+  .register-hero-grid,
+  .register-firm-grid,
+  .register-steps-grid,
+  .leaderboard-tier-grid,
+  .account-tab-grid{
+    grid-template-columns:1fr !important;
+  }
+  .dashboard-identity-row > :first-child{align-self:flex-start;}
+  .dashboard-identity-meta,
+  .dashboard-uid-row,
+  .dashboard-archetype-meta,
+  .discord-hero-actions,
+  .submit-form-actions{gap:8px !important;}
+  .dashboard-progress-grid{grid-template-columns:repeat(3, minmax(0, 1fr)) !important; gap:6px !important;}
+  .dashboard-achievements-grid{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
+  .register-strip-grid,
+  .register-firm-grid,
+  .discord-schedule-grid{grid-template-columns:1fr !important;}
+  .submit-sidebar{position:static !important; top:auto !important;}
+  .submit-firm-grid{grid-template-columns:1fr !important;}
+  .submit-funded-grid{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
+  .withdrawals-kpi-hero > :last-child{flex:1 1 auto; min-width:0;}
+  .discord-hero-art{width:180px !important; height:180px !important; right:-40px !important; max-width:none !important;}
+  .tbl-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   div[style*="grid-template-columns: 1fr 1fr"],
   div[style*="grid-template-columns: repeat(2)"],
   div[style*="grid-template-columns: repeat(3)"],
@@ -445,6 +524,7 @@ select{
   div[style*="display:'flex'"],
   div[style*="display: flex"]{
     min-width:0;
+    flex-wrap:wrap;
   }
 
   button[style*="min-height:36"],
@@ -459,4 +539,25 @@ select{
     left:8px !important; right:8px !important; bottom:8px !important;
     width:auto !important; max-width:none !important;
   }
+}
+
+@media (max-width: 420px){
+  .app-shell{padding:0 10px 18px !important;}
+  .topbar-row{padding:10px !important;}
+  .countdown-stat-card{flex:1 1 100%;}
+  .progress-label-grid{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
+  .dashboard-progress-grid{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
+  .submit-funded-grid,
+  .submit-firm-grid,
+  .dashboard-quick-actions,
+  .dashboard-shortcuts-grid,
+  .dashboard-achievements-grid,
+  .register-strip-grid,
+  .register-firm-grid,
+  .register-steps-grid,
+  .leaderboard-tier-grid,
+  .discord-schedule-grid{
+    grid-template-columns:1fr !important;
+  }
+  .discord-hero-art{width:140px !important; height:140px !important; right:-20px !important;}
 }
